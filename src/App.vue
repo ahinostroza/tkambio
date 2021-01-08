@@ -1,28 +1,46 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app" ref="container">
+        <div v-lazy:background-image="background">
+            <Header />
+            <Body />
+            <Footer />
+        </div>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from "./components/Header.vue";
+import Body from "./components/Body.vue";
+import Footer from "./components/Footer.vue";
+
+import { mapActions } from 'vuex'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: "App",
+    components: {
+        Header,
+        Body,
+        Footer
+    },
+    created () {
+        this.$store.dispatch('loadDivisas')
+    },
+    computed: {
+        background() {
+            return this.$mq === 'sm' ? require("./assets/images/im-background-mb.svg") : this.$mq === 'md' ? require("./assets/images/im-background-tb.svg") : require("./assets/images/im-background.svg")
+        }
+    }
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+div[lazy="loaded"] {
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
+.container-fluid {
+    @media only screen and (min-width: 992px) {
+        max-width: 1200px;
+    }
 }
 </style>

@@ -1,0 +1,11 @@
+@import './typography';
+@import './variables';
+body {
+    font-family: $font-argentum-sans !important;
+    font-weight: normal;
+    font-style: normal;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #FFCC00;
+}
